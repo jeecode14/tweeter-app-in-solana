@@ -4,6 +4,7 @@ import { ArrowPathIcon } from '@heroicons/react/24/solid'
 import Sidebar from '@/components/Sidebar'
 import Feed from '@/components/Feed'
 import Widgets from '@/components/Widgets'
+import GetProgramData from '@/components/ProgramDataContext'
 
 /*
 To avoid warning "parameter 'param' implicitly has 'any' type",
@@ -23,18 +24,20 @@ export default function Home() {
     <div className='mx-auto max-h-screen overflow-hidden lg:max-w-6xl h-screen'>
       
       <main className='grid grid-cols-9'>
-        {/* Sidebar*/}
-        <Sidebar/>
+      <GetProgramData>
+          {/* Sidebar*/}
+          <Sidebar/>
 
-        {/* Feed */}
-        <Feed />
+          {/* Feed */}
+          <Feed />
 
-        {/* Widgets */}
-        <Widgets />
+          {/* Widgets */}
+          <Widgets />
+      </GetProgramData>
+        
       </main>
       
     </div>
-
     </>
   )
 }

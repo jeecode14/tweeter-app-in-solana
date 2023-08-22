@@ -17,37 +17,96 @@
     {
       "name": "initializeUserInfo",
       "accounts": [
-        { "name": "userInfo", "isMut": true, "isSigner": false },
-        { "name": "authority", "isMut": true, "isSigner": true },
-        { "name": "systemProgram", "isMut": false, "isSigner": false }
+        {
+          "name": "userInfo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
       ],
       "args": []
     },
     {
       "name": "writeTweet",
       "accounts": [
-        { "name": "tweeter", "isMut": true, "isSigner": false },
-        { "name": "userInfo", "isMut": true, "isSigner": false },
-        { "name": "authority", "isMut": true, "isSigner": true },
-        { "name": "systemProgram", "isMut": false, "isSigner": false }
+        {
+          "name": "tweeter",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userInfo",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
       ],
       "args": [
-        { "name": "message", "type": "string" },
-        { "name": "tweetId", "type": "publicKey" },
-        { "name": "userPublicKey", "type": "publicKey" }
+        {
+          "name": "message",
+          "type": "string"
+        },
+        {
+          "name": "tweetId",
+          "type": "string"
+        },
+        {
+          "name": "userPublicKey",
+          "type": "string"
+        }
       ]
     },
     {
       "name": "likeTweet",
       "accounts": [
-        { "name": "newTweetlike", "isMut": true, "isSigner": false },
-        { "name": "tweetAccount", "isMut": true, "isSigner": false },
-        { "name": "authority", "isMut": true, "isSigner": true },
-        { "name": "systemProgram", "isMut": false, "isSigner": false }
+        {
+          "name": "newTweetlike",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tweetAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
       ],
       "args": [
-        { "name": "userLikingTweet", "type": "publicKey" },
-        { "name": "tweetId", "type": "publicKey" }
+        {
+          "name": "userLikingTweet",
+          "type": "string"
+        },
+        {
+          "name": "tweetId",
+          "type": "string"
+        }
       ]
     }
   ],
@@ -57,10 +116,22 @@
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "name", "type": "string" },
-          { "name": "email", "type": "string" },
-          { "name": "walletAddress", "type": "publicKey" },
-          { "name": "tweetCount", "type": "u8" }
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "type": "string"
+          },
+          {
+            "name": "walletAddress",
+            "type": "publicKey"
+          },
+          {
+            "name": "tweetCount",
+            "type": "u8"
+          }
         ]
       }
     },
@@ -69,10 +140,22 @@
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "message", "type": "string" },
-          { "name": "likes", "type": "u8" },
-          { "name": "creator", "type": "publicKey" },
-          { "name": "tweetId", "type": "publicKey" }
+          {
+            "name": "message",
+            "type": "string"
+          },
+          {
+            "name": "likes",
+            "type": "u8"
+          },
+          {
+            "name": "creator",
+            "type": "string"
+          },
+          {
+            "name": "tweetId",
+            "type": "string"
+          }
         ]
       }
     },
@@ -81,8 +164,14 @@
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "likers", "type": "publicKey" },
-          { "name": "tweetId", "type": "publicKey" }
+          {
+            "name": "likers",
+            "type": "string"
+          },
+          {
+            "name": "tweetId",
+            "type": "string"
+          }
         ]
       }
     }
@@ -120,9 +209,10 @@
     }
   ],
   "metadata": {
-    "address": "4YucWSxphqGZy8tjLQEXbXfuYTPEZauHJqpQ1HnBAVJv"
+    "address": "49t9fXWdNVXGeiPD3paWwJ1qskZHXTCVNatjgiALQBDr"
   }
 }
+
 
 
     
