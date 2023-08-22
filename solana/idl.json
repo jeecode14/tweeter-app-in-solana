@@ -1,0 +1,130 @@
+{
+  "version": "0.1.0",
+  "name": "tweeter_app_program",
+  "constants": [
+    {
+      "name": "LIKERS_SEED",
+      "type": "bytes",
+      "value": "[116, 119, 101, 101, 116, 108, 111, 118, 101, 114]"
+    },
+    {
+      "name": "LIKERS_SEED",
+      "type": "bytes",
+      "value": "[116, 119, 101, 101, 116, 108, 111, 118, 101, 114]"
+    }
+  ],
+  "instructions": [
+    {
+      "name": "initializeUserInfo",
+      "accounts": [
+        { "name": "userInfo", "isMut": true, "isSigner": false },
+        { "name": "authority", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": []
+    },
+    {
+      "name": "writeTweet",
+      "accounts": [
+        { "name": "tweeter", "isMut": true, "isSigner": false },
+        { "name": "userInfo", "isMut": true, "isSigner": false },
+        { "name": "authority", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "message", "type": "string" },
+        { "name": "tweetId", "type": "publicKey" },
+        { "name": "userPublicKey", "type": "publicKey" }
+      ]
+    },
+    {
+      "name": "likeTweet",
+      "accounts": [
+        { "name": "newTweetlike", "isMut": true, "isSigner": false },
+        { "name": "tweetAccount", "isMut": true, "isSigner": false },
+        { "name": "authority", "isMut": true, "isSigner": true },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "userLikingTweet", "type": "publicKey" },
+        { "name": "tweetId", "type": "publicKey" }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "UserInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "name", "type": "string" },
+          { "name": "email", "type": "string" },
+          { "name": "walletAddress", "type": "publicKey" },
+          { "name": "tweetCount", "type": "u8" }
+        ]
+      }
+    },
+    {
+      "name": "Tweet",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "message", "type": "string" },
+          { "name": "likes", "type": "u8" },
+          { "name": "creator", "type": "publicKey" },
+          { "name": "tweetId", "type": "publicKey" }
+        ]
+      }
+    },
+    {
+      "name": "UserTweetLikers",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "likers", "type": "publicKey" },
+          { "name": "tweetId", "type": "publicKey" }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "CannotUpdateTweet",
+      "msg": "Tweet message cannot be updated"
+    },
+    {
+      "code": 6001,
+      "name": "EmtpyMessage",
+      "msg": "Message cannot be empty"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidTweetId",
+      "msg": "Invalid tweet id"
+    },
+    {
+      "code": 6003,
+      "name": "NotValidTweet",
+      "msg": "Cannot like a tweet without a valid message"
+    },
+    {
+      "code": 6004,
+      "name": "UserLikedTweet",
+      "msg": "User has already liked the tweet"
+    },
+    {
+      "code": 6005,
+      "name": "OwnerLikedTweet",
+      "msg": "Owner is not allowed to like the tweet"
+    }
+  ],
+  "metadata": {
+    "address": "4YucWSxphqGZy8tjLQEXbXfuYTPEZauHJqpQ1HnBAVJv"
+  }
+}
+
+
+    
+
+  

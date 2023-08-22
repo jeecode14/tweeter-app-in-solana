@@ -1,3 +1,8 @@
+### Tweeter App Runninf in Solana Blockchain
+Thhis app is a copy-cat of Twitter (Now X app) but has only limited features which runs on solana blockchian protocol.
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
