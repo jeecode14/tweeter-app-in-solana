@@ -29,23 +29,32 @@ const NETWORK = clusterApiUrl('devnet');
 const CONNECTION = new Connection(NETWORK, "processed");
 
 // to be used for "initUserInfo" and other functions.
-const tweetAppKeypair = anchor.web3.Keypair.generate();
-const PublicKeyString = tweetAppKeypair.publicKey.toBase58();
+const AppKeypair = anchor.web3.Keypair.generate();
+const AppPublicKeyString = AppKeypair.publicKey.toBase58();
+
 
 
 //console.log("USER SEED: ", process.env.REACT_APP_USER_SEED);
 //console.log(idl);
 
-
+let xyz = 0;
 
 function GetProgramData ({children}) {
-
+    const [ifRenderTweetOnce, setRenderTweetOnce] = useState(false);
     const [getInitializeStatus, setInitialize] = useState(false);
     const [getUserInfo, setUserInfo] = useState(undefined);
     const [getTweetInfo, setTweet] = useState(undefined);
 
     const testInfo = () => {
-      console.log("Got here testInfo()");
+      console.log("Increment:", xyz);
+      xyz +=1;
+    }
+
+    const keyGenerate = () =>{
+      // to be used for "initUserInfo" and other functions.
+      const tweetAppKeypair = anchor.web3.Keypair.generate();
+      const PublicKeyString = tweetAppKeypair.publicKey.toBase58();
+      return PublicKeyString
     }
 
     const InitializeUserInfo = () => {
@@ -74,6 +83,7 @@ function GetProgramData ({children}) {
           
                 //console.log("User Address Signature => ", useraddress_signature);
                 setInitialize(true);
+                
               }
               catch(e){
                 console.log("user init is canceled");
@@ -141,9 +151,8 @@ function GetProgramData ({children}) {
       
       
       const writeTweet = async (tweet_message) => {
-        const{tweet_text} = JSON.parse(tweet_message);
+        const {tweet} = JSON.parse(tweet_message);
         
-
         if (window.solana.isConnected){
           // @ts-ignore
           const walletProvider = new AnchorProvider(CONNECTION, window.solana, "processed");
@@ -155,18 +164,19 @@ function GetProgramData ({children}) {
       
             const init = async (walletProvider) => {
               
-              const tweetPublicKey = new PublicKey(PublicKeyString).toBase58();
+              const tweetPublicKey = keyGenerate(); // this is a string publickey
 
               const [userPda] = await findProgramAddressSync([utf8.encode('tweetuser'), walletProvider.wallet.publicKey.toBuffer()], APP_PROGRAM_ID)
               const user_info: any = await appProgram.account.userInfo.fetch(userPda);
 
               const {name, email, walletAddress, tweetCount} = user_info; 
-              const [tweetPda] = await findProgramAddressSync([utf8.encode('tweetinsolana'), walletProvider.wallet.publicKey.toBuffer(), userPda.toBuffer(), Uint8Array.from(tweetCount)], APP_PROGRAM_ID)
-               
+              const [tweetPda] = await findProgramAddressSync([utf8.encode('tweetinsolana'), walletProvider.wallet.publicKey.toBuffer(), userPda.toBuffer(), Uint8Array.from([tweetCount])], APP_PROGRAM_ID)
+              
+              
               try{
                 // Set Instruction method : writeTweet() => message, tweet_id, user_public_key
 
-                const tweet_address: any = await appProgram.methods.writeTweet(tweet_text, tweetPublicKey, userPda.toBase58())
+                const tweet_address: any = await appProgram.methods.writeTweet(tweet, tweetPublicKey, userPda.toBase58())
                     .accounts({
                       tweeter: tweetPda,
                       userInfo: userPda,
@@ -201,6 +211,7 @@ function GetProgramData ({children}) {
       
 
       
+      
 
 
   return (
@@ -212,6 +223,8 @@ function GetProgramData ({children}) {
         getUserInfo,
         writeTweet,
         getTweetInfo,
+        setRenderTweetOnce,
+        ifRenderTweetOnce,
         
     }}
     >

@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { HomeIcon, UserIcon, EllipsisHorizontalIcon, WalletIcon, BoltIcon, BoltSlashIcon } from '@heroicons/react/24/outline'
 import SidebarRow from './SidebarRow'
 import {Buffer} from "buffer";
-import { InitializeUserInfo } from '@/utils/solanaProgram'
 import { connectWallet, disconnectWallet } from '@/utils/initWallet'
 
 import { useProgramData } from '@/context/context'
@@ -13,7 +12,7 @@ import { useProgramData } from '@/context/context'
 
 function Sidebar() {
   // get all the variables/functions/events/any from the context provider
-  const { InitializeUserInfo,getInitializeStatus,fetchUserInfo,getUserInfo, } = useProgramData();
+  const { InitializeUserInfo,getInitializeStatus,fetchUserInfo,getUserInfo} = useProgramData();
 
 
   const homeIcon = useCallback(() => <HomeIcon className="h-6 w-6"/>, [])
@@ -75,7 +74,7 @@ function Sidebar() {
         <SidebarRow Icon={walletIcon} title={walletkey ? "Disconnect Wallet" : "Connect Wallet"}/>
       </button>
       
-      <button onClick={ () => { InitializeUserInfo() } } 
+      <button onClick={ () => { InitializeUserInfo(); } } 
 
         className={ walletkey ? (getInitializeStatus ? 'text-twitter' : 'text-gray-400') : 'text-gray-400'}  
         disabled = {walletkey ? false :true }>

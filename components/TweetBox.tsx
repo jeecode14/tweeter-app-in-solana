@@ -20,11 +20,11 @@ function TweetBox() {
 
         await writeTweet(JSON.stringify(data));
 
+        
+
     };
 
-    useEffect( () =>{
-        console.log("tweet signature: ", getTweetInfo);
-    },[getTweetInfo]);
+    
 
 
 

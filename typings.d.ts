@@ -11,5 +11,16 @@
     tweet: string,
   }
 
+interface TweetDetails{
+  account: {
+    creator: string;
+    tweetId: string;
+    message: string;
+    likes: string;
+  };
+}
+
+
+
 
   

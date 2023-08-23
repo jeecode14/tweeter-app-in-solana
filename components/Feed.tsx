@@ -1,39 +1,58 @@
 'use client'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Suspense, useMemo } from 'react'
 import { ArrowPathIcon } from '@heroicons/react/24/solid'
 import TweetBox from './TweetBox'
 import Tweet from './Tweet'
 import 'dotenv/config';
-import { fetchUserInfo } from '@/utils/solanaProgram'
-
-
+import { useProgramData } from '@/context/context'
+import { fetchUsersTweet } from '@/utils/solanaProgram'
 
 function Feed() {
-    const [wallet, setWalletConnected] = useState(false);
+    const { getInitializeStatus, writeTweet, getTweetInfo, } = useProgramData();
+
     const [userInfo, setUserInfo] = useState<any>(undefined);
+    const [getResult, setResult] = useState(false);
+    const [getRefresh, setRefresh] = useState(false);
+    
+    
+    
+    const tweet_details = useMemo(() => {
+        const tweet_details = [];
 
-    useEffect(() => {
-        setWalletConnected(window.solana.isConnected);
-        const fetchDetails = async () => {
-            const user_info = await fetchUserInfo(); // @ts-ignore
-            setUserInfo(user_info); 
+        const tweetData = async () =>{
+            const result = await fetchUsersTweet();
+            
+            if(result === undefined){
+                // pass
             }
-        if(window.solana.isConnected){
-            fetchDetails();
+            else{
+                
+                    try{
+                        for(let i=0; i < result.length; i++){
+                            //@ts-ignore
+                            tweet_details.push(result[i].account); setResult(true);
+                        }
+                    }
+                    catch(e){
+                        // pass
+                    }
+    
+            }
         }
+        tweetData();
 
-      },[wallet]);
- 
-    
-    
+        return tweet_details;
+    },[getInitializeStatus])
+
     
 
+    
     return (
         <div className='col-span-7 lg:col-span-5 border-r-2'>
             <div className='flex items-center justify-between'>
                 <h1 className='p-5 pb-0 text-xl font-bold'>Home</h1>
                 <ArrowPathIcon className='h-8 w-8 cursor-pointer text-twitter mr-5 mt-5 transition-all duration-500 
-                ease-out hover:rotate-180 active:scale-125'/>        
+                ease-out hover:rotate-180 active:scale-125' onClick={() => setRefresh(true)}/>      
             </div>
 
             {/* Tweeter Box*/}
@@ -41,10 +60,18 @@ function Feed() {
                 <TweetBox/>
             </div>
 
-            {/* Tweet Box*/}
+            <div className='overflow-y-scroll'>
+                {
+                    getResult ? (<Tweet post={tweet_details} check={getResult}/>) : (<div className='flex items-center justify-between p-10 font-thin italic'>** Please click refresh to view tweets.</div>)
+                }
+
+                {
+                    getRefresh ? (getResult ? (<Tweet post={tweet_details} check={getResult}/>) : "" ) : ""
+                }
+            </div>
+            
             <div>
-                {/* <Tweet post={userInfo}/> */}
-                <Tweet post={userInfo}/>
+                
             </div>
         </div>
     )

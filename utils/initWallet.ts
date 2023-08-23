@@ -19,8 +19,6 @@ export const connectWallet = async () => {
     if(solana){
       try{
         const response = await solana.connect();
-        console.log("Connected.");
-        console.log("Wallet Account:", response.publicKey.toString());
 
         return response;
       }
