@@ -59,7 +59,7 @@ function Sidebar() {
 
   
   return (
-    <div className='flex flex-col col-span-2 items-center px-4 md:items-start border-r-2'>
+    <div className='flex flex-col col-span-2 items-center px-4 md:items-start border-r'>
       <Image
         className="m-3"
         src="https://links.papareact.com/drq"

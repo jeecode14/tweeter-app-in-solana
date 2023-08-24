@@ -48,7 +48,7 @@ function Feed() {
 
     
     return (
-        <div className='col-span-7 lg:col-span-5 border-r-2'>
+        <div className='col-span-7 lg:col-span-5 border-x max-h-screen overflow-scroll scrollbar-hide'>
             <div className='flex items-center justify-between'>
                 <h1 className='p-5 pb-0 text-xl font-bold'>Home</h1>
                 <ArrowPathIcon className='h-8 w-8 cursor-pointer text-twitter mr-5 mt-5 transition-all duration-500 
@@ -60,7 +60,7 @@ function Feed() {
                 <TweetBox/>
             </div>
 
-            <div className='overflow-y-scroll'>
+            <div className=''>
                 {
                     getResult ? (<Tweet post={tweet_details} check={getResult}/>) : (<div className='flex items-center justify-between p-10 font-thin italic'>** Please click refresh to view tweets.</div>)
                 }

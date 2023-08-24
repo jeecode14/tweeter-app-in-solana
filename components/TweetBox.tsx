@@ -40,7 +40,7 @@ function TweetBox() {
                     className='bg-transparent h-24 w-full text-xl outline-none placeholder:text-xl'/>
                 <div className='flex items-center'>
                     <div className='flex flex-1 spaxe-x-2 text-gray-500 text-sm'>
-                        <p>* Each tweet cost of 0.06353 SOL</p>
+                        <p>* Each tweet cost of a fraction of SOL</p>
                     </div>
                 <button disabled={!input} className='bg-twitter px-5 py-2 font-bold text-white rounded-full disabled:opacity-40'>Tweet</button>
                 </div>
