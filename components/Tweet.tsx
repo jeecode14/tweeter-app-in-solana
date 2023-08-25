@@ -1,20 +1,39 @@
 'use client'
-import React from 'react'
+import React, {useState, useRef} from 'react'
+import {useForm, SubmitHandler} from "react-hook-form"
+import { useProgramData } from '@/context/context'
 import { HeartIcon } from '@heroicons/react/24/outline'
 //import { publicKey } from '@project-serum/anchor/dist/cjs/utils';
 
 
 type Props={
     post: TweetDetails[];
+    postKey: TweetPubkey[];
     check: boolean;
 }
 
 
-function Tweet({post, check}: Props) {
+function Tweet({post, postKey, check}: Props) {
+    const {addTweetLike} = useProgramData();
+
     const date = new Date();
     //console.log("Tweet rendered ==>", post);
-    // @ts-ignore
-    //console.log(check);
+
+    
+    
+    
+
+    const inputRef = useRef();
+
+    const handleClick = (value) => {
+        // Get the value of the input field from the state variable.
+        //const value = event?.target?.textContent;
+        
+        // Do whatever you want with the value.
+        addTweetLike(value);
+    };
+
+   
     
   return (
     
@@ -38,7 +57,11 @@ function Tweet({post, check}: Props) {
                             <div className='mt-5 flex justify-between'>
                             
                                 <div className='flex cursor-pointer items-center space-x-3 text-gray-400'>
-                                    <HeartIcon className='h-5 w-5'/><p>{data.likes}</p> 
+                                    
+                                    <HeartIcon className='h-5 w-5' onClick={() =>{handleClick((postKey[index].toBase58())); }}/>
+                                    <p>{data.likes}</p>
+                                   
+   
                                 </div>
                 
                                 <div className='flex cursor-pointer items-center space-x-3 text-gray-400'>
@@ -61,8 +84,8 @@ function Tweet({post, check}: Props) {
                     <div className='flex space-x-3'>
                         <div>
                             <div className='flex items-center space-x-1'>
-                                <p className='mr-1 font-bold'>User</p>
-                                <p className='text-gray-500'>@owner-****</p>
+                                <p className='mr-1 font-bold'>Tweeted by</p>
+                                <p className='text-gray-500'>@****</p>
                             </div>
         
                             <p className='pt-1'></p>

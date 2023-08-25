@@ -18,6 +18,7 @@ function Feed() {
     
     const tweet_details = useMemo(() => {
         const tweet_details = [];
+        const tweet_pubkey = [];
 
         const tweetData = async () =>{
             const result = await fetchUsersTweet();
@@ -30,7 +31,10 @@ function Feed() {
                     try{
                         for(let i=0; i < result.length; i++){
                             //@ts-ignore
-                            tweet_details.push(result[i].account); setResult(true);
+                            tweet_details.push(result[i].account); 
+                            //@ts-ignore
+                            tweet_pubkey.push(result[i].publicKey);
+                            setResult(true);
                         }
                     }
                     catch(e){
@@ -41,8 +45,9 @@ function Feed() {
         }
         tweetData();
 
-        return tweet_details;
+        return [tweet_details, tweet_pubkey];
     },[getInitializeStatus])
+    
 
     
 
@@ -62,11 +67,11 @@ function Feed() {
 
             <div className=''>
                 {
-                    getResult ? (<Tweet post={tweet_details} check={getResult}/>) : (<div className='flex items-center justify-between p-10 font-thin italic'>** Please click refresh to view tweets.</div>)
+                    getResult ? (<Tweet post={tweet_details[0]} postKey={tweet_details[1]} check={getResult}/>) : (<div className='flex items-center justify-between p-10 font-thin italic'>** Please click refresh to view tweets.</div>)
                 }
 
                 {
-                    getRefresh ? (getResult ? (<Tweet post={tweet_details} check={getResult}/>) : "" ) : ""
+                    getRefresh ? (getResult ? (<Tweet post={tweet_details[0]} postKey={tweet_details[1]} check={getResult}/>) : "" ) : ""
                 }
             </div>
             

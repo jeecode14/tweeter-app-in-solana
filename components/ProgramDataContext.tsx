@@ -208,6 +208,68 @@ function GetProgramData ({children}) {
           setTweet(undefined);
         }
       }
+
+
+
+
+      const addTweetLike = async (data) => {
+        const tweetPubKey = data;
+
+        if (window.solana.isConnected){
+          // @ts-ignore
+          const walletProvider = new AnchorProvider(CONNECTION, window.solana, "processed");
+        
+          // @ts-ignore
+          const appProgram = new Program(idl, APP_PROGRAM_ID, walletProvider);
+      
+          try{
+      
+            const init = async (walletProvider) => {
+              
+              const tweetlikeNewPublicKey = keyGenerate(); // this is a string publickey
+
+              const [userPda] = await findProgramAddressSync([utf8.encode('tweetuser'), walletProvider.wallet.publicKey.toBuffer()], APP_PROGRAM_ID)
+              
+              const tweet_info: any = await appProgram.account.tweet.fetch(new PublicKey(tweetPubKey));
+              const {message, likes, creator, tweetId} = tweet_info; 
+              
+              const [tweetPda] = await findProgramAddressSync([new PublicKey(tweetId).toBuffer(), Uint8Array.from([likes])], APP_PROGRAM_ID)
+              
+              try{
+                // Set Instruction method : writeTweet() => message, tweet_id, user_public_key
+
+                const tweet_address: any = await appProgram.methods.likeTweet(userPda.toBase58(), tweetId)
+                    .accounts({
+                      newTweetlike: tweetPda,
+                      tweetAccount: new PublicKey(tweetPubKey),
+                      authority: walletProvider?.wallet.publicKey,
+                      systemProgram: SystemProgram.programId,
+                    })
+                    .rpc();
+          
+                
+              }
+              catch(e){
+                console.log("Sending tweet error: ",e);
+                
+              }
+              
+            };
+            init(walletProvider);
+            
+        
+          }
+          catch(e){
+            // if error arise here
+            
+          }
+      
+        }
+        else{
+          // if not wallet connected, return false;
+          
+        }
+      }
       
 
       
@@ -225,6 +287,7 @@ function GetProgramData ({children}) {
         getTweetInfo,
         setRenderTweetOnce,
         ifRenderTweetOnce,
+        addTweetLike,
         
     }}
     >

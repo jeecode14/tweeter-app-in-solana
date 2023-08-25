@@ -5,12 +5,7 @@
     {
       "name": "LIKERS_SEED",
       "type": "bytes",
-      "value": "[116, 119, 101, 101, 116, 108, 111, 118, 101, 114]"
-    },
-    {
-      "name": "LIKERS_SEED",
-      "type": "bytes",
-      "value": "[116, 119, 101, 101, 116, 108, 111, 118, 101, 114]"
+      "value": "b'likers'"
     }
   ],
   "instructions": [
@@ -176,42 +171,11 @@
       }
     }
   ],
-  "errors": [
-    {
-      "code": 6000,
-      "name": "CannotUpdateTweet",
-      "msg": "Tweet message cannot be updated"
-    },
-    {
-      "code": 6001,
-      "name": "EmtpyMessage",
-      "msg": "Message cannot be empty"
-    },
-    {
-      "code": 6002,
-      "name": "InvalidTweetId",
-      "msg": "Invalid tweet id"
-    },
-    {
-      "code": 6003,
-      "name": "NotValidTweet",
-      "msg": "Cannot like a tweet without a valid message"
-    },
-    {
-      "code": 6004,
-      "name": "UserLikedTweet",
-      "msg": "User has already liked the tweet"
-    },
-    {
-      "code": 6005,
-      "name": "OwnerLikedTweet",
-      "msg": "Owner is not allowed to like the tweet"
-    }
-  ],
   "metadata": {
     "address": "49t9fXWdNVXGeiPD3paWwJ1qskZHXTCVNatjgiALQBDr"
   }
 }
+
 
 
 

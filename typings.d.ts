@@ -11,6 +11,10 @@
     tweet: string,
   }
 
+  interface TweetLikeForm{
+    tweetid: string,
+  }
+
 interface TweetDetails{
   account: {
     creator: string;
@@ -18,6 +22,10 @@ interface TweetDetails{
     message: string;
     likes: string;
   };
+}
+
+interface TweetPubkey{
+  publicKey:string;
 }
 
 
