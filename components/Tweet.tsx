@@ -16,12 +16,6 @@ type Props={
 function Tweet({post, postKey, check}: Props) {
     const {addTweetLike} = useProgramData();
 
-    const date = new Date();
-    //console.log("Tweet rendered ==>", post);
-
-    
-    
-    
 
     const inputRef = useRef();
 

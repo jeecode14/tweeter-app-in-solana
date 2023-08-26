@@ -44,6 +44,8 @@ function GetProgramData ({children}) {
     const [getInitializeStatus, setInitialize] = useState(false);
     const [getUserInfo, setUserInfo] = useState(undefined);
     const [getTweetInfo, setTweet] = useState(undefined);
+    const [getUserPubkey, setUserPubkey] = useState(undefined);
+    const [getTweetLikeUpdate, setTweetLikeUpdate] = useState(undefined);
 
     const testInfo = () => {
       console.log("Increment:", xyz);
@@ -111,7 +113,17 @@ function GetProgramData ({children}) {
         
     }
       
-      
+      const getThisUserPubKey = async () => {
+          // @ts-ignore
+          const walletProvider = new AnchorProvider(CONNECTION, window.solana, "processed");
+          const WalletPublicKey = new PublicKey(walletProvider.wallet.publicKey);
+          // @ts-ignore
+          const appProgram = new Program(idl, APP_PROGRAM_ID, walletProvider);
+
+          const [userPda] = await findProgramAddressSync([utf8.encode('tweetuser'), walletProvider.wallet.publicKey.toBuffer()], APP_PROGRAM_ID)
+          const pubkey: any = userPda.toBase58();
+          setUserPubkey(pubkey);
+      }
       
       const fetchUserInfo = async () =>{
       
@@ -246,7 +258,8 @@ function GetProgramData ({children}) {
                       systemProgram: SystemProgram.programId,
                     })
                     .rpc();
-          
+                  
+                setTweetLikeUpdate(tweet_address);
                 
               }
               catch(e){
@@ -288,6 +301,9 @@ function GetProgramData ({children}) {
         setRenderTweetOnce,
         ifRenderTweetOnce,
         addTweetLike,
+        getUserPubkey,
+        getThisUserPubKey,
+        getTweetLikeUpdate,
         
     }}
     >

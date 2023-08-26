@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import { HomeIcon, UserIcon, EllipsisHorizontalIcon, WalletIcon, BoltIcon, BoltSlashIcon } from '@heroicons/react/24/outline'
 import SidebarRow from './SidebarRow'
@@ -12,7 +12,7 @@ import { useProgramData } from '@/context/context'
 
 function Sidebar() {
   // get all the variables/functions/events/any from the context provider
-  const { InitializeUserInfo,getInitializeStatus,fetchUserInfo,getUserInfo} = useProgramData();
+  const { InitializeUserInfo,getInitializeStatus,fetchUserInfo,getUserInfo, getUserPubkey} = useProgramData();
 
 
   const homeIcon = useCallback(() => <HomeIcon className="h-6 w-6"/>, [])
@@ -20,12 +20,15 @@ function Sidebar() {
   const ellipseHorIcon = useCallback(() => <EllipsisHorizontalIcon className="h-6 w-6"/>, [])
   const boltIcon = useCallback(() => <BoltIcon className="h-6 w-6"/>, [])
   const boltSlashIcon = useCallback(() => <BoltSlashIcon className="h-6 w-6"/>, [])
+  const userIcon = useCallback(() => <UserIcon className="h-6 w-6"/>, [])
 
+  
 
   // UseState to determine the status of wallet
   const [walletkey, setWalletKey] = useState<any>(undefined);
   const [statusWallet, setWalletStatus] = useState<any>("Initialize");
-
+  const [getProfile, setProfile] = useState(false);
+  const [getIam, setIam] = useState("");
 
   // Function to disconnect wallet
   const dWallet = async () => {
@@ -49,12 +52,23 @@ function Sidebar() {
       
     }
 
+    
 
-    const iUser = async () =>{
-      //const init = InitializeUserInfo();
-      //setWalletStatus(init.report);
-    }
+    useMemo(()=>{
+
+      if(getUserPubkey === undefined){
+        // nothing here
+      }
+      else{
+        const len = getUserPubkey.length;
+        const name = getUserPubkey.slice(0, 3) + "***" + getUserPubkey.slice((len-3), len);
+        setIam(name);
+      }
+      
+      
+    },[getUserPubkey])
   
+    
 
 
   
@@ -70,6 +84,12 @@ function Sidebar() {
 
       <SidebarRow Icon={homeIcon} title="Home"/>
 
+      {/*
+      <button  onClick={() => {setProfile(true)}}>
+        <SidebarRow Icon={userIcon} title="Profile" />
+      </button>
+      */}
+
       <button onClick={ walletkey ? dWallet : cWallet } className={ walletkey ? 'text-twitter' : 'text-red-500'}>
         <SidebarRow Icon={walletIcon} title={walletkey ? "Disconnect Wallet" : "Connect Wallet"}/>
       </button>
@@ -81,6 +101,14 @@ function Sidebar() {
         <SidebarRow Icon={walletkey ? (getInitializeStatus ? boltIcon: boltSlashIcon) : boltSlashIcon} title={ walletkey ? (getInitializeStatus ? "Online":"Initialize") : "Offline"}/>
 
       </button>
+
+      <div className='py-20'>
+        <SidebarRow Icon={userIcon} title={getIam == "" ? "I Am": getIam} /> 
+      </div>
+      
+
+
+      
     </div>
   )
 }
