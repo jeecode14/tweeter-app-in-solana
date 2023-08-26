@@ -28,6 +28,11 @@ const publicKeyString = tweetAppKeypair.publicKey.toBase58();
 
 
 export const fetchUsersTweet = async () =>{
+
+  try{
+    if(window.solana.isConnected){}
+  }
+  catch{ return null}
         
   if (window.solana.isConnected){
     // @ts-ignore

@@ -4,7 +4,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import { HomeIcon, UserIcon, EllipsisHorizontalIcon, WalletIcon, BoltIcon, BoltSlashIcon } from '@heroicons/react/24/outline'
 import SidebarRow from './SidebarRow'
-import {Buffer} from "buffer";
 import { connectWallet, disconnectWallet } from '@/utils/initWallet'
 
 import { useProgramData } from '@/context/context'
@@ -32,11 +31,15 @@ function Sidebar() {
 
   // Function to disconnect wallet
   const dWallet = async () => {
-    const disconnect = await disconnectWallet();
+    try{
+      const disconnect = await disconnectWallet();
 
-    if (disconnect != false){
-      setWalletKey(disconnect);
+      if (disconnect != false){
+        setWalletKey(disconnect);
+      }
     }
+    catch{}
+    
     
   }
 
@@ -44,11 +47,15 @@ function Sidebar() {
     // Function to disconnect wallet
     const cWallet = async () => {
         // Function to connect wallet
-        const connect = await connectWallet();
+        try{
+          const connect = await connectWallet();
   
-      if (connect != false){
-        setWalletKey(connect);
-      }
+          if (connect != false){
+            setWalletKey(connect);
+          }
+        }
+        catch{}
+        
       
     }
 
