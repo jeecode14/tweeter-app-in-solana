@@ -4,7 +4,7 @@ import { useProgramData } from '@/context/context'
 
 type Props={
     post: TweetDetails[];
-    postKey: TweetPubkey[];
+    postKey: any;
     check: boolean;
 }
 

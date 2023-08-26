@@ -8,7 +8,7 @@ import { HeartIcon } from '@heroicons/react/24/outline'
 
 type Props={
     post: TweetDetails[];
-    postKey: TweetPubkey[];
+    postKey: any;
     check: boolean;
 }
 
@@ -35,7 +35,7 @@ function Tweet({post, postKey, check}: Props) {
         { 
             check ? 
                 ( 
-                    post.reverse().map((data, index) => (
+                    post.map((data, index) => (
                         <div className='flex flex-col space-x-3 border-y p-5 border-gray-100' key={new Date().getTime() + (index+1)}>
                             <div className='flex space-x-3'>
                                 <div>

@@ -16,17 +16,15 @@
   }
 
 interface TweetDetails{
-  account: {
-    creator: string;
-    tweetId: string;
-    message: string;
-    likes: string;
-  };
+  
+  creator: string;
+  tweetId: string;
+  message: string;
+  likes: string;
+  
 }
 
-interface TweetPubkey{
-  publicKey:string;
-}
+
 
 
 
